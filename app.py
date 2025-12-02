@@ -21,8 +21,13 @@ CORS(app)
 # ========================================================
 # Ideally, use os.environ.get("GOOGLE_API_KEY") for security on Render
 # But hardcoding is fine for student project
-GOOGLE_API_KEY = "AIzaSyA0d5870lvPTMzYGJ8DP_7vkYJWl4_AdRk"
-genai.configure(api_key=GOOGLE_API_KEY)
+# Yeh code Render ke 'Environment Variables' se key dhoondega
+GOOGLE_API_KEY = os.environ.get("GOOGLE_API_KEY")
+
+if not GOOGLE_API_KEY:
+    print("❌ Error: GOOGLE_API_KEY not found!")
+else:
+    genai.configure(api_key=GOOGLE_API_KEY)
 
 # Auto-Select Best Model
 print("🔄 Configuring AI Model...")
@@ -170,4 +175,5 @@ def predict_box():
 if __name__ == "__main__":
     # Render assigns a port automatically, so we use os.environ.get
     port = int(os.environ.get("PORT", 5000))
+
     app.run(host='0.0.0.0', port=port)
